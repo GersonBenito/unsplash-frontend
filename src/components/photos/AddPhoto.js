@@ -1,13 +1,24 @@
 import React, { useState } from 'react'
-import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { Boton } from '../button/Boton';
 import { Glabel } from '../label/Glabel';
-import { Modals } from '../modal/Modals';
+import { Gmodal } from '../modal/Gmodal';
 import { Space } from 'antd';
+import { useForm } from '../../hooks/useForm';
+import { agregarPhoto } from '../../redux/acciones/photo';
+import { Container } from '../../styled/addPhoto';
 
 export const AddPhoto = () => {
 
     const [visible, setVisible] = useState(false);
+    const [form, handleInputChange] = useForm({
+        label: '',
+        url: '',
+    });
+
+    const dispatch = useDispatch();
+
+    const { label, url } = form;
 
     const showModal = () =>{
         setVisible(true);
@@ -17,52 +28,51 @@ export const AddPhoto = () => {
         setVisible(false);
     }
 
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        dispatch( agregarPhoto(form) );
+        cancelModal();
+    }
+
     return (
         <>
-            <Boton title='Agregar foto' accion={showModal} success={true} />
-            <Modals visible={visible}>
+            <Boton title='Agregar foto' accion={showModal} success={true} border={false} />
+            <Gmodal visible={visible}>
                 <Container>
                     <div className="title">
                         <p>Agregar una nueva foto</p>
                     </div>
                     <div className="form">
-                        <form>
-                            <Glabel 
-                                label='Label' 
-                                name='label' 
-                                placeholder='Ingrese el nombre de la foto' 
-                            />
-                            <Glabel
-                                label='Url foto'
-                                name='url'
-                                placeholder='https://mi-foto.png'
-                            />
+                        <form onSubmit={handleSubmit}>
+                            <div className="label">
+                                <Glabel 
+                                    label='Label' 
+                                    name='label' 
+                                    event={handleInputChange}
+                                    value={label}
+                                    placeholder='Ingrese el nombre de la foto' 
+                                />
+                            </div>
+                            <div className="url">
+                                <Glabel
+                                    label='Url foto'
+                                    name='url'
+                                    event={handleInputChange}
+                                    value={url}
+                                    placeholder='https://mi-foto.png'
+                                />
+                            </div>
                             <div className="contendorBotones">
                                 <Space>
-                                    <Boton title='Cancelar' accion={cancelModal} />
-                                    <Boton type='submit' title='Enviar' success={true} />
+                                    <Boton title='Cancelar' accion={cancelModal} border={false} />
+                                    <Boton type='submit' title='Enviar' success={true} border={false} />
                                 </Space>
                             </div>
                         </form>
                     </div>
                 </Container>
-            </Modals>
+            </Gmodal>
         </>
     )
 }
 
-const Container = styled.div`
-    .title p{
-        color: black;
-        font-size: 20px;
-        font-weight: 500;
-        font-family: sans-serif;
-    }
-    .contendorBotones{
-        display: flex;
-        justify-content: flex-end;
-        margin-top: 10px;
-    }
-
-    padding: 5px;
-`

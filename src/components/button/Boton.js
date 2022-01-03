@@ -1,22 +1,25 @@
-import styled from 'styled-components';
 import { Button } from 'antd';
+import { Container } from '../../styled/button';
 
-export const Boton = ({ title, accion, type = 'button', success = false }) => {
+export const Boton = ({ 
+    title, 
+    accion, 
+    type = 'button', 
+    success = false, 
+    danger = false, 
+    round = false,
+    transparent = false, 
+    border = true,
+}) => {
     return (
-        <Contenedor success={success}>
+        <Container 
+            success={success} 
+            danger={danger} 
+            round={round}
+            transparent={transparent}
+            border={border}
+        >
             <Button htmlType={type} onClick={accion}>{title}</Button>
-        </Contenedor>
+        </Container>
     )
 }
-
-const Contenedor = styled.div`
-    .ant-btn{
-        border: none;
-        color: ${props => props.success ? 'white':'#6c757d'};
-        border-radius: 8px;
-        font-weight: 500;
-        letter-spacing: 1px;
-        background-color: ${props => props.success ? '#28a745' : 'transparent' } ;
-        opacity: .8;
-    }
-`

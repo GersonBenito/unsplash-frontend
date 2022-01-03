@@ -1,6 +1,7 @@
 import { Modal } from 'antd';
-import styled from 'styled-components';
-export const Modals = ({ visible, children }) => {
+import { ContainerModal } from '../../styled/gmodal';
+
+export const Gmodal = ({ visible, children }) => {
     return (
         <ContainerModal>
             <Modal
@@ -14,7 +15,4 @@ export const Modals = ({ visible, children }) => {
     )
 }
 
-const ContainerModal = styled.div`
-
-`
 

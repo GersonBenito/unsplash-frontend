@@ -1,0 +1,6 @@
+export const types = {
+    ADD_PHOTO: 'ADD_PHOTO',
+    GET_PHOTOS: 'GET_PHOTOS',
+    UPDATE_PHOTO: 'UPDATE_PHOTO',
+    DELETE_PHOTO: 'DELETE_PHOTO'
+}

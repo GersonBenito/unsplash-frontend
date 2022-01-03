@@ -1,18 +1,18 @@
-import styled from 'styled-components'
+import { Imagen } from '../../styled/photo'
+import { Boton } from '../button/Boton'
 
-export const Photo = ({ url, title }) => {
+export const Photo = ({ url, label }) => {
+    
     return (
         <Imagen>
-            <img src={url} alt={title} />
+            <img src={url} alt={label} />
+            <div className="delete">
+                <Boton title='Delete' danger={true} round={true} transparent={true} />
+            </div>
+            <div className="title">
+                <p>{label}</p>
+            </div>
         </Imagen>
     )
 }
 
-const Imagen = styled.div`
-    img{
-        width: 350px;
-        border-radius: 10px;
-        cursor: pointer;
-    }
-
-`;

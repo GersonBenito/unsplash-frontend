@@ -1,41 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { usedFetch } from '../../hooks/useFetch'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
 import { Photo } from './Photo'
+import { getPhotos } from '../../redux/acciones/photo';
+import { useSelector } from 'react-redux';
+import { ContainerPhoto } from '../../styled/photos';
 
 export const Photos = () =>{
 
-    const [photo, setPhoto] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-
-    const getPhotos = async () =>{
-        const { data, loading } = await usedFetch('photo');
-        setPhoto(data);
-        setIsLoading(loading);
-    }
-
+    const dispatch = useDispatch();
+    
+    const { photos } = useSelector( state => state.photos );
+   
     useEffect(()=>{
-        getPhotos();
-    },[])
+        dispatch( getPhotos() );
+    },[dispatch])
 
     
     return (
         <ContainerPhoto>
             {
-                !isLoading && photo.map(foto => <Photo key={foto._id} {...foto} />)
+                photos.length > 0 && photos.map(foto => <Photo key={foto._id} {...foto} />)
 
             }
         </ContainerPhoto>
     )
 }
 
-const ContainerPhoto = styled.div`
-    display: grid;
-    gap: 1rem;
-    grid-auto-rows: 12rem;
-    grid-auto-flow: dense;
-    grid-template-columns: repeat(auto-fill,minmax(min(100%,20rem),1fr));
-    justify-items: center;
-    align-items: center;
-    padding: 20px
-`;
